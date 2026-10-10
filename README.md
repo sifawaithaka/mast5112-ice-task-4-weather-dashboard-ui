@@ -20,9 +20,7 @@ The program was developed using the following:
 
 **Error Log**
 
-<img width="199" height="263" alt="image" src="https://github.com/user-attachments/assets/efc56955-cc5e-43d0-87b7-d593643d876e" />
-
-<img width="194" height="44" alt="image" src="https://github.com/user-attachments/assets/e9cb5b41-a2de-4651-a89a-73fc103e6ffc" />
+<img width="286" height="241" alt="image" src="https://github.com/user-attachments/assets/8d12a747-89d4-4660-923e-a5e1c10e4bc1" />
 
 **Testing**
 
