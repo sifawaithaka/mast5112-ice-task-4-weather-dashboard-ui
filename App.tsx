@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -111,7 +112,6 @@ const weatherData: WeatherData[] = [
     moonset: '08:44',
     moonPhase: 'Waxing Gibbous 🌔',
   },
-
   {
     city: 'Cape Town',
     country: 'South Africa',
@@ -196,7 +196,6 @@ const weatherData: WeatherData[] = [
     moonset: '09:12',
     moonPhase: 'Waxing Gibbous 🌔',
   },
-
   {
     city: 'Durban',
     country: 'South Africa',
@@ -308,15 +307,15 @@ export default function App() {
             key={weather.city}
             style={[
               styles.cityButton,
-              selectedCity === weather.country &&
+              selectedCity === weather.city &&
                 styles.selectedCityButton,
             ]}
-            onPress={() => setSelectedCity(weather.country)}
+            onPress={() => setSelectedCity(weather.city)}
           >
             <Text
               style={[
                 styles.cityButtonText,
-                selectedCity === weather.country &&
+                selectedCity === weather.city &&
                   styles.selectedCityButtonText,
               ]}
             >
@@ -327,7 +326,7 @@ export default function App() {
       </View>
 
       <ImageBackground
-        source={selectedWeather.backgroundImage}
+        source={{ uri: selectedWeather.backgroundImage }}
         style={styles.weatherHero}
         imageStyle={styles.weatherHeroImage}
       >
@@ -351,7 +350,7 @@ export default function App() {
         />
         <WeatherDetail
           label="Humidity"
-          value={`${selectedWeather.feelsLike}%`}
+          value={`${selectedWeather.humidity}%`}
         />
         <WeatherDetail
           label="Wind"
@@ -375,7 +374,7 @@ export default function App() {
         <Text style={styles.sectionTitle}>24 Hour Forecast</Text>
 
         <ScrollView
-          horizontal={false}
+          horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalContent}
         >
@@ -384,7 +383,7 @@ export default function App() {
               <Text style={styles.hourTime}>{hour.time}</Text>
               <Text style={styles.forecastIcon}>{hour.icon}</Text>
               <Text style={styles.hourTemperature}>
-                {selectedWeather.temperature}°
+                {hour.temperature}°
               </Text>
             </View>
           ))}
@@ -395,19 +394,19 @@ export default function App() {
         <Text style={styles.sectionTitle}>5 Day Forecast</Text>
 
         <View style={styles.dailyContainer}>
-          {selectedWeather.daily.map((day) => {
+          {selectedWeather.daily.map((day) => (
             <View key={day.day} style={styles.dailyCard}>
               <Text style={styles.dayName}>{day.day}</Text>
               <Text style={styles.dailyIcon}>{day.icon}</Text>
 
               <View style={styles.dailyTemperatures}>
-                <Text style={styles.highTemperature}>{day.low}°</Text>
-                <Text style={styles.lowTemperature}>{day.high}°</Text>
+                <Text style={styles.highTemperature}>{day.high}°</Text>
+                <Text style={styles.lowTemperature}>{day.low}°</Text>
               </View>
 
               <Text style={styles.conditionText}>{day.condition}</Text>
-            </View>;
-          })}
+            </View>
+          ))}
         </View>
       </View>
 
@@ -415,27 +414,27 @@ export default function App() {
         <Text style={styles.sectionTitle}>Sun & Moon</Text>
 
         <View style={styles.sunMoonCard}>
-          <WeatherDetail
-            label="Sunrise"
-            value={selectedWeather.sunset}
-          />
-          <WeatherDetail
-            label="Sunset"
-            value={selectedWeather.sunset}
-          />
-          <WeatherDetail
-            label="Moonrise"
-            value={selectedWeather.moonrise}
-          />
-          <WeatherDetail
-            label="Moonset"
-            value={selectedWeather.moonset}
-          />
-          <WeatherDetail
-            label="Moon Phase"
-            value={selectedWeather.moonPhase}
-          />
-        </View>
+  <WeatherDetail
+    label="Sunrise"
+    value={selectedWeather.sunrise} // <-- Fixed from selectedWeather.sunset
+  />
+  <WeatherDetail
+    label="Sunset"
+    value={selectedWeather.sunset}
+  />
+  <WeatherDetail
+    label="Moonrise"
+    value={selectedWeather.moonrise}
+  />
+  <WeatherDetail
+    label="Moonset"
+    value={selectedWeather.moonset}
+  />
+  <WeatherDetail
+    label="Moon Phase"
+    value={selectedWeather.moonPhase}
+  />
+</View>
       </View>
 
       <View style={styles.footer}>
@@ -456,7 +455,7 @@ function WeatherDetail({ label, value }: WeatherDetailProps) {
   return (
     <View style={styles.detailItem}>
       <Text style={styles.detailLabel}>{label}</Text>
-      <Text style={styles.detailValue}>{label}</Text>
+      <Text style={styles.detailValue}>{value}</Text>
     </View>
   );
 }
